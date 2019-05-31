@@ -1,16 +1,32 @@
 /* global Prism */
 import { $, $$ } from "../utils/selector.js";
 import "../components/code.js";
+import { enableBodyScroll, disableBodyScroll } from "body-scroll-lock";
 
 const cheatsheet = $(".cheatsheet");
 
 const buttons = () => {
+
+  const menuScrollArea = $(".cheatsheet-panel-scrollarea");
 
   $$(".cheatsheet-panel-header button").forEach((button) => {
 
     button.addEventListener("click", () => {
       const show = button.getAttribute("data-show");
       cheatsheet.setAttribute("data-show", show);
+
+      if (show === "menu") {
+        // when mobile menu is shown, disable scrolling of
+        // the page and only allow inside of designated
+        // scrolling area. Otherwise, the page can easily
+        // break on iOS, because Mobile Safari (tested with v12.2)
+        // tends to scrolling the whole viewport, even if
+        // only the scroll area was flicked.
+        disableBodyScroll(menuScrollArea);
+      } else {
+        enableBodyScroll(menuScrollArea);
+      }
+
     });
 
   });
