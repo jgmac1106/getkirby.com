@@ -85,7 +85,6 @@ body {
  *    that `padding-bottom` on an element with
  *    `overflow-y: auto/scroll`.
  */
-
 .cheatsheet-main-scrollarea {
   padding: 1.5rem 1.5rem 0; /* 1 */
 
@@ -204,6 +203,8 @@ body {
 
 .cheatsheet-header form svg {
   margin-left: 1.25rem;
+  position: relative;
+  top: .125rem;
 }
 
 .cheatsheet-header form svg * {
@@ -214,12 +215,17 @@ body {
   fill: $color-syntax-yellow;
 }
 
+/**
+ * 1. Must be at least 1rem/16px, to prevent trigger page
+ *    zoom in Mobile Safari (tested with v12.2),
+ *    when the input is focussed.
+ */
 .cheatsheet-header form input {
   background: none;
   border: 0;
   color: $color-white;
   font: inherit;
-  font-size: .875rem;
+  font-size: 1rem; /* 1 */
   height: 2.5rem;
   outline: 0;
   padding: 0 1rem;
@@ -279,6 +285,17 @@ body {
 .cheatsheet-header .menu-search-view-all {
   align-items: center;
   display: flex;
+}
+
+@include mq(to 28em) {
+  /**
+   * Hide all header items, except for the search form on
+   * very small screens (i.e. smartphones) and expand the
+   * search field to span the whole page.
+   */
+  :root.is-menu-search-open .cheatsheet-header > :not(form) {
+    display: none;
+  }
 }
 
 /** Sections Navigation **/
