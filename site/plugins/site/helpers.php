@@ -1,5 +1,7 @@
 <?php
 
+use Kirby\Toolkit\Str;
+
 function availableIcons()
 {
 
@@ -42,6 +44,32 @@ function csv(string $file): array
 function iconRoot($name)
 {
     return __DIR__ . '/icons/' . $name . '.svg';
+}
+
+function datatype(?string $type, string $tag = 'code'): ?string
+{
+    if (empty($type) === true) {
+        $type = 'mixed';
+    } else if (Str::contains($type, '|') === true) {
+        $types = explode('|', $type);
+        $types = array_map(function ($value) {
+            return datatype($value, 'span');
+        }, $types);
+        return '<code class="type type-multiple">' . implode('|', $types) . '</code>';
+    }
+
+    if (Str::upper($type[0]) === $type[0]) {
+        $plain = 'class';
+    } else {
+        $plain = strip_tags($type);
+    }
+
+    return '<' . $tag . ' class="type type-' . $plain . '">' . $type . '</' . $tag . '>';
+}
+
+function formatDefault(?string $value = null): string
+{
+    return is_null($value) == false ? "<code>{$value}</code>" : '<span class="properties-empty">–</span>';
 }
 
 // Load an icon from SVG sprite
