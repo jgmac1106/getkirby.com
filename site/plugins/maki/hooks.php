@@ -46,6 +46,22 @@ return [
 
         }
 
-    ]
+    ],
 
+    // Look for <code> tags that contain type definitions, such as
+    // <code>string</code> or `string`and colorize them. If inline
+    // code contains a class name, also add a link to the class in
+    // the reference. 
+    'kirbytags:after' => function(string $text = null, array $data = []) {
+        
+        $text = preg_replace_callback('!<code>(.*)</code>!siU', function($match) {         
+            return datatype($match[1]);
+        }, $text);
+
+        $text = preg_replace_callback('!`([a-z_]+)`!iU', function($match) {
+;           return datatype($match[1]);
+        }, $text);
+
+        return $text;
+    }
 ];

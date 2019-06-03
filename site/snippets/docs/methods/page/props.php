@@ -1,16 +1,83 @@
 ## The `$props` parameter
 
-Property | Type | Required | Description |
---|--|--|--|
-`blueprint` | `array` | <code></code> | Blueprint definition |
-`content` | `array` | <code></code> | Field values |
-`dirname` | `string` | <code></code> |  |
-`draft` | `bool` | <code></code> | If `true`, the page will be created as draft |
-`model` | `string` | <code></code> | Page model |
-`num` | `mixed` | <code></code> | Sorting number. `null` for unlisted pages. |
-`parent` | <a href="<?= referenceLookup('Kirby\Cms\Page')->url() ?>">`Kirby\Cms\Page`</a> | <code></code> | Parent page |
-`root` | `string` | <code></code> |  |
-`slug` | `string` | `required` |  |
-`template` | `string` | <code></code> |  |
-`translations` | `array` | <code></code> | Language codes with subarrays of field values |
-`url` | `string` | <code></code> |  |
+<table class="properies">
+  <thead>
+    <th>Property</th>
+    <th>Type</th>
+    <th>Description</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>blueprint</td>
+      <td><?= datatype('array') ?></td>
+      <td>Blueprint definition</td>
+    </tr>
+
+    <tr>
+      <td>content</td>
+      <td><?= datatype('array') ?></td>
+      <td>Field values</td>
+    </tr>
+
+    <tr>
+      <td>dirname</td>
+      <td><?= datatype('string') ?></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>draft</td>
+      <td><?= datatype('bool') ?></td>
+      <td>If <code>true</code>, the page will be created as draft</td>
+    </tr>
+
+    <tr>
+      <td>model</td>
+      <td><?= datatype('string') ?></td>
+      <td>Page model</td>
+    </tr>
+
+    <tr>
+      <td>num</td>
+      <td><?= datatype('mixed') ?></td>
+      <td>Sorting number, use <code>null</code> for unlisted pages</td>
+    </tr>
+
+    <tr>
+      <td>parent</td>
+      <td><?= datatype('Kirby\Cms\Page') ?></td>
+      <td>Parent page</td>
+    </tr>
+
+    <tr>
+      <td>root</td>
+      <td><?= datatype('string') ?></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>slug<?= cheatsheetRequired(true) ?></td>
+      <td><?= datatype('string') ?></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>template</td>
+      <td><?= datatype('string') ?></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>translations</td>
+      <td><?= datatype('array') ?></td>
+      <td>Language codes with subarrays of field values</td>
+    </tr>
+
+    <tr>
+      <td>url</td>
+      <td><?= datatype('string') ?></td>
+      <td></td>
+    </tr>
+
+  </tbody>
+</table>

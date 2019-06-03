@@ -502,3 +502,15 @@ body {
     }
   }
 }
+
+/* additional inline styles */
+
+/**
+ * 1. Increase specificity to override default abbr[title] style.
+ */
+.cheatsheet-required.cheatsheet-required /* 1 */ {
+  background: none;
+  font-family: $font-mono;
+  color: $color-red;
+  font-weight: 700;
+}

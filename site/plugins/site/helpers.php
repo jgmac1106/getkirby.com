@@ -1,6 +1,8 @@
 <?php
 
+use Kirby\Cms\Page;
 use Kirby\Toolkit\Str;
+use Kirby\Toolkit\Html;
 
 function availableIcons()
 {
@@ -24,6 +26,88 @@ function cheatsheetAdvanced($page)
     return Html::a($page->url(),  'Simple view ›');
 }
 
+function datatype(?string $type = null, string $tag = 'code'): ?string
+{
+    $datatypes = [
+        'string',
+        'int',
+        'float',
+        'bool',
+        'array',
+        'object',
+        'mixed',
+        'null',
+    ];
+
+    if (Str::contains($type, ' ')) {
+        // any tyype containing at least one whitespace is
+        // considered not a datatype
+        return "<{$tag}>{$type}</{$tag}>";
+    }
+
+    if (Str::contains($type, '|')) {
+        $types = explode('|', $type);
+        $types = array_map(function ($value) {
+            return datatype($value, 'span');
+        }, $types);
+
+        return '<' . $tag . ' class="type type-multiple">' . implode('<span class="type-separator">|</span>', $types) . '</' . $tag . '>';
+    }
+
+    if (in_array($type, $datatypes) === true) {
+        return Html::tag($tag, $type, [
+            'class' => "type type-{$type}",
+        ]);
+    }
+
+    if (preg_match('/^[A-Z]/', $type) === 1) {
+        
+        if ($lookup = referenceLookup($type)) {
+            // $type = Html::tag('a', $lookup->url(), $type);
+            return "<{$tag} class=\"type type-class\"><a href=\"{$lookup->url()}\">{$type}</a></{$tag}>";
+        }
+
+        return Html::tag($tag, $type, [
+            'class' => "type type-class",
+        ]);
+    }
+
+    return Html::tag($tag, $type);
+
+    // - multiple datatypes = no whitespace + "|"
+    // - default datatype = in array
+    // - class = first letter uppercase
+    // other
+
+
+    // if ($type === null) {
+    //     return Html::tag($tag,)
+    // }
+
+
+    // if ($type === null) {
+    //     $type = 'mixed';
+    // } else if (Str::contains($type, '|') === true) {
+    //     $types = explode('|', $type);
+    //     $types = array_map(function ($value) {
+    //         return datatype($value, 'span');
+    //     }, $types);
+    //     return '<code class="type type-multiple">' . implode('<span class="type-separator">|</span>', $types) . '</code>';
+    // }
+
+    // if (preg_match('/^[A-Z]/', $type) === 1) {
+    //     $plain = 'class';
+    // } else {
+    //     $plain = strip_tags($type);
+    // }
+
+    // return '<' . $tag . ' class="type type-' . $plain . '">' . $type . '</' . $tag . '>';
+}
+
+function cheatsheetRequired($required) {
+    return $required ? '<abbr title="required" class="cheatsheet-required">*</abbr>' : '';
+}
+
 function csv(string $file): array
 {
 
@@ -44,27 +128,6 @@ function csv(string $file): array
 function iconRoot($name)
 {
     return __DIR__ . '/icons/' . $name . '.svg';
-}
-
-function datatype(?string $type, string $tag = 'code'): ?string
-{
-    if (empty($type) === true) {
-        $type = 'mixed';
-    } else if (Str::contains($type, '|') === true) {
-        $types = explode('|', $type);
-        $types = array_map(function ($value) {
-            return datatype($value, 'span');
-        }, $types);
-        return '<code class="type type-multiple">' . implode('|', $types) . '</code>';
-    }
-
-    if (Str::upper($type[0]) === $type[0]) {
-        $plain = 'class';
-    } else {
-        $plain = strip_tags($type);
-    }
-
-    return '<' . $tag . ' class="type type-' . $plain . '">' . $type . '</' . $tag . '>';
 }
 
 function formatDefault(?string $value = null): string

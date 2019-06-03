@@ -282,9 +282,9 @@ class HelperPage extends Page
         $classes = array_map(function ($class) {
            $class = substr($class, 0, 1) === '\\' ? substr($class, 1) : $class;
 
-            if ($reference = referenceLookup($class)) {
-                return Html::a($reference->url(), $class);
-            }
+            // if ($reference = referenceLookup($class)) {
+            //     return Html::a($reference->url(), $class);
+            // }
 
             return $class;
         }, explode('|', $type));

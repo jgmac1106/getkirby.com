@@ -1,13 +1,56 @@
 ## The `$props` parameter
 
-Property       | Type     | Required      | Description |
---             | --       | --            | --          |
-`blueprint`    | `array`  | <code></code> | Blueprint definition |
-`content`      | `array`  | <code></code> | Field values |
-`email`    | `string`  | <code></code> |  |
-`id`    | `string`  | <code></code> |  |
-`language`    | `string`  | <code></code> |  |
-`name`    | `string`  | <code></code> |  |
-`password`    | `string`  | <code></code> |  |
-`role`    | `string`  | <code></code> |  |
-`translations` | `array`  | <code></code> | Language codes with subarrays of field values   |
+<table class="properties">
+  <thead>
+    <th>Property</th>
+    <th>Type</th>
+    <th>Description</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>blueprint</td>
+      <td><?= datatype('array') ?></td>
+      <td>Blueprint definition</td>
+    </tr>
+    <tr>
+      <td>content</td>
+      <td><?= datatype('array') ?></td>
+      <td>Field values</td>
+    </tr>
+    <tr>
+      <td>email</td>
+      <td><?= datatype('string') ?></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>id</td>
+      <td><?= datatype('string') ?></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>language</td>
+      <td><?= datatype('string') ?></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>name</td>
+      <td><?= datatype('string') ?></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>password</td>
+      <td><?= datatype('string') ?></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>role</td>
+      <td><?= datatype('string') ?></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>translations</td>
+      <td><?= datatype('array') ?></td>
+      <td>Language codes with subarrays of field values</td>
+    </tr>
+  </tbody>
+</table>

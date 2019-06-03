@@ -3,7 +3,6 @@
     <tr>
       <th>Property</th>
       <th>Type</th>
-      <th>Required</th>
       <th>Default</th>
       <th>Description</th>
     </tr>
@@ -11,9 +10,8 @@
   <tbody>
     <?php foreach ($rows as $row): ?>
     <tr>
-      <td><code class="bold"><?= $row['prop'] ?></code></td>
+      <td><code><?= $row['prop'] ?></code><?= cheatsheetRequired($row['required']) ?></td>
       <td><?= datatype($row['type'] ?? null) ?></td><?php /* <code class="code-<?= $row['type'] ? strip_tags($row['type']) :  'default' ?>"><?= $row['type'] ?? 'mixed' ?></code> */ ?>
-      <td data-property-label="Required:"><?= $row['required'] ? 'yes' : '<span class="properties-empty">no</span>' ?></td>
       <td data-property-label="Default:"><?= formatDefault($row['default'] ?? null) ?></td>
       <td class="text"><?= kti($row['comment']) ?></td>
     </tr>

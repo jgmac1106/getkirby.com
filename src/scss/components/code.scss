@@ -11,38 +11,44 @@ code {
   padding: .05em .5em;
 }
 
-code.type-multiple {
+.type-multiple {
   background: transparent;
-  color: rgba($color-black, .7);
   overflow: hidden;
   padding: 0;
 
   > span:not(:last-child) {
-    margin-right: -.5ch;
-    padding-right: .5ch;
+    margin-right: -1ch;
+    padding-right: 1ch;
   }
 
   > span:not(:first-child) {
-    margin-left: -.5ch;
-    padding-left: .5ch;
+    margin-left: -1ch;
+    padding-left: 1ch;
+    background: linear-gradient(to right, transparent, var(--background) 1ch);
   }
 }
 
-code.type-multiple > * {
-  background: rgba($color-black, .1);
+.type-separator {
+  position: relative;
+  z-index: 2;
+}
+
+.type-multiple > *:not(.type-separator) {
+  --background: #{mix($color-black, $color-white, 10%)};
+  background: var(--background);
   box-decoration-break: clone;
-  color: $color-black;
   display: inline-block;
   padding: .05em .5em;
   white-space: nowrap;
 }
 
-code.type:not(.type-multiple) {
+.type:not(.type-multiple) {
+  background: var(--background, #{mix($color-black, $color-white, 10%)});
   white-space: nowrap;
 }
 
 .type.type-string {
-  background: mix($color-syntax-green, $color-white, 40%);
+  --background: #{mix($color-syntax-green, $color-white, 40%)};
 }
 
 .type.type-int,
@@ -55,16 +61,16 @@ code.type:not(.type-multiple) {
 }
 
 .type.type-array {
-  background: mix($color-syntax-aqua, $color-white, 40%);
+  --background: #{mix($color-syntax-aqua, $color-white, 40%)};
 }
 
 // .type-object,
 .type-class {
-  background: mix($color-syntax-yellow, $color-white, 40%);
+  --background: #{mix($color-syntax-yellow, $color-white, 40%)};
 }
 
 .type.type-null {
-  background: rgba($color-blue, .25);
+  --background: #{mix($color-syntax-blue, $color-white, 40%)};
 }
 
 /**
