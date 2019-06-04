@@ -26,7 +26,7 @@ function cheatsheetAdvanced($page)
     return Html::a($page->url(),  'Simple view ›');
 }
 
-function datatype(?string $type = null, string $tag = 'code'): ?string
+function formatDatatype(?string $type = null, string $tag = 'code'): ?string
 {
     $datatypes = [
         'string',
@@ -54,7 +54,7 @@ function datatype(?string $type = null, string $tag = 'code'): ?string
         }
 
         $types = array_map(function ($value) {
-            return datatype($value, 'span');
+            return formatDatatype($value, 'span');
         }, $types);
 
         return '<' . $tag . ' class="type-multiple">' . implode('<span class="type-separator">|</span>', $types) . '</' . $tag . '>';
@@ -96,7 +96,7 @@ function datatype(?string $type = null, string $tag = 'code'): ?string
     // } else if (Str::contains($type, '|') === true) {
     //     $types = explode('|', $type);
     //     $types = array_map(function ($value) {
-    //         return datatype($value, 'span');
+    //         return formatDatatype($value, 'span');
     //     }, $types);
     //     return '<code class="type type-multiple">' . implode('<span class="type-separator">|</span>', $types) . '</code>';
     // }

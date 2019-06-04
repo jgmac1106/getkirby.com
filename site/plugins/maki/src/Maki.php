@@ -176,7 +176,7 @@ class Maki extends ParsedownExtra
         if (empty($Excerpt) == false) {
             return array_merge($Excerpt, [
                 'element' => [
-                    'rawHtml' => datatype($Excerpt['element']['text']),
+                    'rawHtml' => formatDatatype($Excerpt['element']['text']),
                 ],
             ]);
         }

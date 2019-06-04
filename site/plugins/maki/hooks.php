@@ -55,12 +55,12 @@ return [
     'kirbytags:after' => function(string $text = null, array $data = []) {
         
         $text = preg_replace_callback('!<code>(.*)</code>!siU', function($match) {         
-            return datatype($match[1]);
+            return formatDatatype($match[1]);
         }, $text);
 
         // Now handled by the Maki plugin.
         // $text = preg_replace_callback('!`([a-z_]+)`!iU', function($match) {
-        //     return datatype($match[1]);
+        //     return formatDatatype($match[1]);
         // }, $text);
 
         return $text;

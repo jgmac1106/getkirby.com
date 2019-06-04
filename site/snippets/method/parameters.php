@@ -13,7 +13,7 @@
     <?php foreach ($parameters as $param): ?>
     <tr>
       <td><code>$<?= $param['name'] ?></code></td>
-      <td><?= datatype($param['type']) ?></td>
+      <td><?= formatDatatype($param['type']) ?></td>
       <td data-property-label="Default:"><?= formatDefault($param['default']) ?></td>
       <td class="text"><?= kti($param['description']) ?></td>
     </tr>
