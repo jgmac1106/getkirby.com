@@ -4,33 +4,37 @@ namespace Kirby\Cms;
 
 use Closure;
 use Kirby\Data\Data;
-use Kirby\Exception\Exception;
 use Kirby\Exception\InvalidArgumentException;
-use Kirby\Exception\LogicException;
-use Kirby\Toolkit\A;
-use Kirby\Toolkit\F;
-use Kirby\Toolkit\Str;
 use Throwable;
 
+/**
+ * ModelWithContent
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier GmbH
+ * @license   https://getkirby.com/license
+ */
 abstract class ModelWithContent extends Model
 {
 
     /**
      * The content
      *
-     * @var Content
+     * @var Kirby\Cms\Content
      */
     public $content;
 
     /**
-     * @var Translations
+     * @var Kirby\Cms\Translations
      */
     public $translations;
 
     /**
      * Returns the blueprint of the model
      *
-     * @return Blueprint
+     * @return Kirby\Cms\Blueprint
      */
     abstract public function blueprint();
 
@@ -48,9 +52,9 @@ abstract class ModelWithContent extends Model
      * Returns the content
      *
      * @param string $languageCode
-     * @return Content
+     * @return Kirby\Cms\Content
      */
-    public function content(string $languageCode = null): Content
+    public function content(string $languageCode = null)
     {
 
         // single language support
@@ -117,6 +121,26 @@ abstract class ModelWithContent extends Model
             }
         } else {
             return $directory . '/' . $filename . '.' . $extension;
+        }
+    }
+
+    /**
+     * Returns an array with all content files
+     *
+     * @return array
+     */
+    public function contentFiles(): array
+    {
+        if ($this->kirby()->multilang() === true) {
+            $files = [];
+            foreach ($this->kirby()->languages()->codes() as $code) {
+                $files[] = $this->contentFile($code);
+            }
+            return $files;
+        } else {
+            return [
+                $this->contentFile()
+            ];
         }
     }
 
@@ -233,6 +257,16 @@ abstract class ModelWithContent extends Model
     }
 
     /**
+     * Returns the lock object for this model
+     *
+     * @return ContentLock
+     */
+    public function lock(): ContentLock
+    {
+        return new ContentLock($this);
+    }
+
+    /**
      * Read the content from the content file
      *
      * @internal
@@ -251,7 +285,7 @@ abstract class ModelWithContent extends Model
     /**
      * Returns the absolute path to the model
      *
-     * @return string
+     * @return string|null
      */
     abstract public function root(): ?string;
 
@@ -330,7 +364,7 @@ abstract class ModelWithContent extends Model
     /**
      * Sets the Content object
      *
-     * @param Content|null $content
+     * @param array|null $content
      * @return self
      */
     protected function setContent(array $content = null)
@@ -368,8 +402,8 @@ abstract class ModelWithContent extends Model
      * Returns a single translation by language code
      * If no code is specified the current translation is returned
      *
-     * @param string $languageCode
-     * @return Translation|null
+     * @param string|null $languageCode
+     * @return Kirby\Cms\ContentTranslation|null
      */
     public function translation(string $languageCode = null)
     {
@@ -379,7 +413,7 @@ abstract class ModelWithContent extends Model
     /**
      * Returns the translations collection
      *
-     * @return Collection
+     * @return Kirby\Cms\Collection
      */
     public function translations()
     {
