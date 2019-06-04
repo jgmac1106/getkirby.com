@@ -539,65 +539,36 @@ hr::after {
 /* -----  Datatypes  -------------------------------------------------------- */
 
 .text .type {
-  background: var(--background, #{mix($color-black, $color-white, 7%)});
+  background: mix($color-black, $color-white, 7%);
   white-space: nowrap;
 }
 
-.text .type-multiple {
-  background: transparent;
-  display: inline-flex;
-  overflow: hidden;
-  padding: 0;
-}
-
-.text .type-multiple > :not(.type-separator) {
-  --background: #{mix($color-black, $color-white, 7%)};
-
-  background: var(--background);
-  box-decoration-break: clone;
-  display: inline-block;
-  padding: .05em .5em;
-  white-space: nowrap;
-}
-
-.text .type-multiple > :not(.type-separator):not(:last-child) {
-  margin-right: -1ch;
-  padding-right: 1ch;
-}
-
-.text .type-multiple > :not(.type-separator):not(:first-child) {
-  background: linear-gradient(to right, transparent, var(--background) 1ch);
-  margin-left: -1ch;
-  padding-left: 1ch;
-}
-
-.text .type-multiple .type-separator {
-  position: relative;
-  z-index: 2;
+.text .type-separator {
+  padding: 0 .125rem;
 }
 
 .text .type.type-string {
-  --background: #{mix($color-syntax-green, $color-white, 40%)};
+  background: mix($color-syntax-green, $color-white, 40%);
 }
 
 .text .type.type-int,
 .text .type.type-float {
-  --background: #{mix($color-syntax-orange, $color-white, 40%)};
+  background: mix($color-syntax-orange, $color-white, 40%);
 }
 
 .text .type.type-bool {
-  --background: #{mix($color-syntax-purple, $color-white, 40%)};
+  background: mix($color-syntax-purple, $color-white, 40%);
 }
 
 .text .type.type-array {
-  --background: #{mix($color-syntax-aqua, $color-white, 40%)};
+  background: mix($color-syntax-aqua, $color-white, 40%);
 }
 
 .text .type.type-object,
 .text .type.type-class {
-  --background: #{mix($color-syntax-yellow, $color-white, 40%)};
+  background: mix($color-syntax-yellow, $color-white, 40%);
 }
 
 .text .type.type-null {
-  --background: #{mix($color-syntax-blue, $color-white, 40%)};
+  background: mix($color-syntax-blue, $color-white, 40%);
 }

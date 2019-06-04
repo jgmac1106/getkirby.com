@@ -103,7 +103,7 @@ function formatDatatype(?string $type = null): ?string
         }
     }
 
-    return Html::tag('code', $type);
+    return "<code>{$type}</code>";
 }
 
 function formatDefault(?string $value = null): string
