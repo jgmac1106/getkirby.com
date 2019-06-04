@@ -2,9 +2,11 @@
 
 <table class="properties">
   <thead>
-    <th>Property</th>
-    <th>Type</th>
-    <th>Description</th>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
   </thead>
   <tbody>
     <tr>
