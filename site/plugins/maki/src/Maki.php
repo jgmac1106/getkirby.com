@@ -168,4 +168,19 @@ class Maki extends ParsedownExtra
         return $Block;
     }
 
+    // Highlight data types in inline code
+    protected function inlineCode($Excerpt)
+    {
+        $Excerpt = parent::inlineCode($Excerpt);
+        
+        if (empty($Excerpt) == false) {
+            return array_merge($Excerpt, [
+                'element' => [
+                    'rawHtml' => datatype($Excerpt['element']['text']),
+                ],
+            ]);
+        }
+
+        return $Excerpt;
+    }
 }

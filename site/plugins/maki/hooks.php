@@ -58,9 +58,10 @@ return [
             return datatype($match[1]);
         }, $text);
 
-        $text = preg_replace_callback('!`([a-z_]+)`!iU', function($match) {
-;           return datatype($match[1]);
-        }, $text);
+        // Now handled by the Maki plugin.
+        // $text = preg_replace_callback('!`([a-z_]+)`!iU', function($match) {
+        //     return datatype($match[1]);
+        // }, $text);
 
         return $text;
     }

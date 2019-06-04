@@ -39,7 +39,7 @@ function datatype(?string $type = null, string $tag = 'code'): ?string
         'null',
     ];
 
-    if (Str::contains($type, ' ')) {
+    if (Str::contains($type, ' ') === true) {
         // any tyype containing at least one whitespace is
         // considered not a datatype
         return "<{$tag}>{$type}</{$tag}>";
@@ -47,11 +47,17 @@ function datatype(?string $type = null, string $tag = 'code'): ?string
 
     if (Str::contains($type, '|')) {
         $types = explode('|', $type);
+
+        if (in_array('', $types)) {
+            // Don’t process code blocks, that contain empty elements
+            return "<{$tag}>{$type}</{$tag}>"; 
+        }
+
         $types = array_map(function ($value) {
             return datatype($value, 'span');
         }, $types);
 
-        return '<' . $tag . ' class="type type-multiple">' . implode('<span class="type-separator">|</span>', $types) . '</' . $tag . '>';
+        return '<' . $tag . ' class="type-multiple">' . implode('<span class="type-separator">|</span>', $types) . '</' . $tag . '>';
     }
 
     if (in_array($type, $datatypes) === true) {
@@ -60,16 +66,16 @@ function datatype(?string $type = null, string $tag = 'code'): ?string
         ]);
     }
 
-    if (preg_match('/^[A-Z]/', $type) === 1) {
+    if (Str::contains($type, '\\') === true && preg_match('/^[A-Z]/', $type) === 1) {
         
         if ($lookup = referenceLookup($type)) {
             // $type = Html::tag('a', $lookup->url(), $type);
             return "<{$tag} class=\"type type-class\"><a href=\"{$lookup->url()}\">{$type}</a></{$tag}>";
+        } else if (class_exists($type) === true) {
+            return Html::tag($tag, $type, [
+                'class' => "type type-class",
+            ]);
         }
-
-        return Html::tag($tag, $type, [
-            'class' => "type type-class",
-        ]);
     }
 
     return Html::tag($tag, $type);
