@@ -26,90 +26,6 @@ function cheatsheetAdvanced($page)
     return Html::a($page->url(),  'Simple view ›');
 }
 
-function formatDatatype(?string $type = null, string $tag = 'code'): ?string
-{
-    $datatypes = [
-        'string',
-        'int',
-        'float',
-        'bool',
-        'array',
-        'object',
-        'mixed',
-        'null',
-    ];
-
-    if (Str::contains($type, ' ') === true) {
-        // any tyype containing at least one whitespace is
-        // considered not a datatype
-        return "<{$tag}>{$type}</{$tag}>";
-    }
-
-    if (Str::contains($type, '|')) {
-        $types = explode('|', $type);
-
-        if (in_array('', $types)) {
-            // Don’t process code blocks, that contain empty elements
-            return "<{$tag}>{$type}</{$tag}>"; 
-        }
-
-        $types = array_map(function ($value) {
-            return formatDatatype($value, 'span');
-        }, $types);
-
-        return '<' . $tag . ' class="type-multiple">' . implode('<span class="type-separator">|</span>', $types) . '</' . $tag . '>';
-    }
-
-    if (in_array($type, $datatypes) === true) {
-        return Html::tag($tag, $type, [
-            'class' => "type type-{$type}",
-        ]);
-    }
-
-    if (Str::contains($type, '\\') === true && preg_match('/^[A-Z]/', $type) === 1) {
-        
-        if ($lookup = referenceLookup($type)) {
-            // $type = Html::tag('a', $lookup->url(), $type);
-            return "<{$tag} class=\"type type-class\"><a href=\"{$lookup->url()}\">{$type}</a></{$tag}>";
-        } else if (class_exists($type) === true) {
-            return Html::tag($tag, $type, [
-                'class' => "type type-class",
-            ]);
-        }
-    }
-
-    return Html::tag($tag, $type);
-
-    // - multiple datatypes = no whitespace + "|"
-    // - default datatype = in array
-    // - class = first letter uppercase
-    // other
-
-
-    // if ($type === null) {
-    //     return Html::tag($tag,)
-    // }
-
-
-    // if ($type === null) {
-    //     $type = 'mixed';
-    // } else if (Str::contains($type, '|') === true) {
-    //     $types = explode('|', $type);
-    //     $types = array_map(function ($value) {
-    //         return formatDatatype($value, 'span');
-    //     }, $types);
-    //     return '<code class="type type-multiple">' . implode('<span class="type-separator">|</span>', $types) . '</code>';
-    // }
-
-    // if (preg_match('/^[A-Z]/', $type) === 1) {
-    //     $plain = 'class';
-    // } else {
-    //     $plain = strip_tags($type);
-    // }
-
-    // return '<' . $tag . ' class="type type-' . $plain . '">' . $type . '</' . $tag . '>';
-}
-
 function cheatsheetRequired($required) {
     return $required ? '<abbr title="required" class="cheatsheet-required">*</abbr>' : '';
 }
@@ -136,9 +52,63 @@ function iconRoot($name)
     return __DIR__ . '/icons/' . $name . '.svg';
 }
 
+function formatDatatype(?string $type = null): ?string
+{
+    $datatypes = [
+        'string',
+        'int',
+        'float',
+        'bool',
+        'array',
+        'object',
+        'mixed',
+        'null',
+    ];
+
+    if (Str::contains($type, ' ') === true) {
+        // any tyype containing at least one whitespace is
+        // considered not a datatype
+        return "<code>{$type}</code>";
+    }
+
+    if (Str::contains($type, '|')) {
+        $types = explode('|', $type);
+
+        if (in_array('', $types)) {
+            // Don’t process code blocks, that contain empty elements
+            return "<code>{$type}</code>"; 
+        }
+
+        $types = array_map(function ($value) {
+            return formatDatatype($value);
+        }, $types);
+
+        return implode('<span class="type-separator">|</span>', $types);
+    }
+
+    if (in_array($type, $datatypes) === true) {
+        return Html::tag('code', $type, [
+            'class' => "type type-{$type}",
+        ]);
+    }
+
+    if (Str::contains($type, '\\') === true && preg_match('/^[A-Z]/', $type) === 1) {
+        
+        if ($lookup = referenceLookup($type)) {
+            return "<code class=\"type type-class\"><a href=\"{$lookup->url()}\">{$type}</a></code>";
+        } else if (class_exists($type) === true) {
+            return Html::tag('code', $type, [
+                'class' => "type type-class",
+            ]);
+        }
+    }
+
+    return Html::tag('code', $type);
+}
+
 function formatDefault(?string $value = null): string
 {
-    return is_null($value) == false ? "<code>{$value}</code>" : '<span class="properties-empty">–</span>';
+    return is_null($value) === false ? formatDatatype($value) : '<span class="properties-empty">–</span>';
 }
 
 // Load an icon from SVG sprite
