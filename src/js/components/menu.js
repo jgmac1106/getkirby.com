@@ -64,9 +64,6 @@ class Menu {
   }
 
   handleGlobalEventForSubmenus(e) {
-
-    console.log("global event", this.currentSubmenu, e);
-
     if (this.currentSubmenu === null) {
       return;
     }
@@ -172,13 +169,6 @@ ready(() => {
 
   if (menu) {
     new Menu(menu);
-
-    // $$(".menu-item.has-dropdown > a").forEach((item) => {
-    //   item.addEventListener('touchstart', (e) => {
-    //     e.preventDefault();
-    //     console.log("touch started");
-    //   });
-    // });
   }
 
 });
