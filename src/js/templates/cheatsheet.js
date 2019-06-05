@@ -32,19 +32,6 @@ const buttons = () => {
   });
 };
 
-// const searchField = () => {
-
-//   const header = $(".cheatsheet-header");
-//   const searchInput = $(".cheatsheet-header form input");
-
-//   console.log("bla", header, searchInput);
-
-//   searchInput.addEventListener("focus", () => {
-//     console.log("focus");
-//   });
-
-// };
-
 const load = (link) => {
 
   // start loading
@@ -77,10 +64,6 @@ const load = (link) => {
 
       // link header buttons
       buttons();
-
-      // search field
-      searchField();
-
     });
 
 };
