@@ -65,8 +65,9 @@
     top: 100%;
   }
 
-  .menu-item:hover .menu-dropdown,
-  .menu-item:focus-within .menu-dropdown {
+  .no-js .menu-item:hover .menu-dropdown,
+  .menu-item.is-open .menu-dropdown,
+  .no-js .menu-item:focus-within .menu-dropdown {
     display: block;
   }
 

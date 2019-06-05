@@ -9,8 +9,6 @@
     <i></i>
   </button>
 
-  <!-- <button class="buttonmenu-button menu-close-button" aria-label="Close menu"><i></i><i></i></a> -->
-
   <div class="menu-container" id="menu">
     <ul class="menu-items menu-main">
       <?php foreach ($pages->listed() as $item): ?>
