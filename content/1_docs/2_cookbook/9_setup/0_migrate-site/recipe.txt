@@ -254,7 +254,7 @@ return function ($kirby) {
 
 ### Page status
 
-While filter methods like `visible()`, `invisible()` and related Pages methods will still work, these are now deprecated. To make your project future-proof, we recommend that you replace them with (link: docs/reference/objects/pages/listed text: `listed`)/(link: docs/reference/objects/pages/unlisted text: `unlisted`)/(link: docs/reference/objects/pages/published text: `published`) and related methods as required.
+While filter methods like `visible()`, `invisible()` and related Pages methods will still work, these are now deprecated. To make your project future-proof, we recommend that you replace them with `published` and related methods as required.
 
 ### KirbyText pre/post filters
 
@@ -355,34 +355,34 @@ The toolkit has been completely rewritten, new methods have been added, others r
 | Toolkit class  |  Replacement |
 |---|---|
 | `Bitmask` | <code></code>  |
-| `Brick`  | (link: docs/reference/tools/html text: `Kirby\Toolkit\Html`)  |
+| `Brick`  | `Kirby\Toolkit\Html`  |
 | `C` | <code></code> |
 | `Cache`  | `Kirby\Cache`  |
-| `Cookie`  | (link: docs/reference/tools/cookie text: `Kirby\Http\Cookie`)  |
+| `Cookie`  | `Kirby\Http\Cookie`  |
 | `Crypt`  | <code></code> |
-| `Data`  | (link: docs/reference/tools/data text: `Kirby\Data`)  |
+| `Data`  | `Kirby\Data`  |
 | `Database`  | `Kirby\Database`  |
 | `Db`  | `Kirby\Database\Db`  |
 | `Detect` | `Kirby\CMS\System` |
 | `Dimensions`  | `Kirby\Image\Dimensions`  |
-| `Email`  | (link: docs/reference/@#email text: `Kirby\Email`) |
+| `Email`  | `Kirby\Email` |
 | `Embed`   |  (link: docs/reference/templates/helpers text: YouTube, Vimeo and Gist helpers) |
 | `Error`  | `Kirby\Exception`  |
 | `ErrorReporting`  | `Kirby\Exception`  |
 | `Exif`  | `Kirby\Image\Exif`  |
 | `Folder`  | <code></code> |
-| `Header` | (link: docs/reference/tools/header text: `Kirby\Http\Header`) |
+| `Header` | `Kirby\Http\Header` |
 | `I`  | `Kirby\Toolkit\Iterator` |
 | `L`  | `Kirby\Toolkit\I18n`  |
 | `Media`  | `Kirby\Image`  |
 | `Password`  | <code></code> |
-| `R`  | (link: docs/reference/objects/request text: `Kirby\Http\Request`)  |
+| `R`  | `Kirby\Http\Request`  |
 | `Redirect`  | `Kirby\Http\Response\Redirect`  |
 | `Remote`  | `Kirby\Http\Remote`  |
 | `Response`  | `Kirby\Http\Response`  |
 | `Router`  | `Kirby\Http\Router`  |
 | `S`  | `Kirby\Session`  |
-| `Server`  | (link: docs/reference/tools/server text: `Kirby\Http\Server`)  |
+| `Server`  | `Kirby\Http\Server`  |
 | `Sql`  | `Kirby\Database\Sql`  |
 | `System`  | <code></code>  |
 | `Thumb`  | `Kirby\Image`  |
@@ -391,7 +391,7 @@ The toolkit has been completely rewritten, new methods have been added, others r
 | `Upload`  | `Kirby\Api`  |
 | `Url`  | `Kirby\Http\Url`  |
 | `Visitor`  | `Kirby\Http\Visitor`  |
-| `YAML`  | (link: docs/reference/tools/data text: `Kirby\Data\Yaml`)  |
+| `YAML`  | `Kirby\Data\Yaml`  |
 
 The Toolkit classes are now in the  `Kirby\Toolkit` namespace.
 
