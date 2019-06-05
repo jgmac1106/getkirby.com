@@ -49,18 +49,23 @@ body {
   }
 }
 
+/**
+ * 1. Needs to be `block`, as some older browsers incl. Mobile Safari on
+ *    iOS 10.3 do not support flexbox on button elements.
+ */
 .cheatsheet-panel-header button {
-  align-items: center;
   background: none;
   border: 0;
   cursor: pointer;
-  display: flex;
+  display: block; /* 1 */
   font: inherit;
   font-size: .875rem;
 }
 
 .cheatsheet-panel-header button svg {
   margin-right: .5rem;
+  position: relative;
+  top: .0625rem;
 }
 
 .cheatsheet-panel-scrollarea {

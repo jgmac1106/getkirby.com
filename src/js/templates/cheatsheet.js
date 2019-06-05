@@ -15,17 +15,17 @@ const buttons = () => {
       const show = button.getAttribute("data-show");
       cheatsheet.setAttribute("data-show", show);
 
-      if (show === "menu") {
-        // when mobile menu is shown, disable scrolling of
-        // the page and only allow inside of designated
-        // scrolling area. Otherwise, the page can easily
-        // break on iOS, because Mobile Safari (tested with v12.2)
-        // tends to scrolling the whole viewport, even if
-        // only the scroll area was flicked.
-        disableBodyScroll(menuScrollArea);
-      } else {
-        enableBodyScroll(menuScrollArea);
-      }
+      // if (show === "menu") {
+      //   // when mobile menu is shown, disable scrolling of
+      //   // the page and only allow inside of designated
+      //   // scrolling area. Otherwise, the page can easily
+      //   // break on iOS, because Mobile Safari (tested with v12.2)
+      //   // tends to scrolling the whole viewport, even if
+      //   // only the scroll area was flicked.
+      //   disableBodyScroll(menuScrollArea);
+      // } else {
+      //   enableBodyScroll(menuScrollArea);
+      // }
 
     });
 
@@ -105,4 +105,21 @@ if (currentSection && currentSection.scrollIntoView) {
 
 if (currentEntry && currentEntry.scrollIntoView) {
   currentEntry.scrollIntoView();
+}
+
+// Fix for Mobil Safari on iOS/iPad (tested with v10.3), because its
+// scrolls the whole body when using scrollIntoView on a nested scrolling
+// container.
+document.body.scrollTo(0, 0);
+
+// Disable page scrolling, except for the designated scrolling areas. This
+// also ensures, that iOS does not accidently scroll the whole viewport
+// and hides parts of the page.
+disableBodyScroll($(".cheatsheet-main-scrollarea"));
+disableBodyScroll($(".cheatsheet-sections .cheatsheet-panel-scrollarea"));
+
+const entriesScrollarea = $(".cheatsheet-entries-scrollarea");
+
+if (entriesScrollarea !== null) {
+  disableBodyScroll(entriesScrollarea);
 }
