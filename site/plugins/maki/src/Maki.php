@@ -173,14 +173,12 @@ class Maki extends ParsedownExtra
     {
         $Excerpt = parent::inlineCode($Excerpt);
         
-        if (empty($Excerpt) == false) {
+        if ($Excerpt !== null) {
             return array_merge($Excerpt, [
                 'element' => [
-                    'rawHtml' => formatDatatype($Excerpt['element']['text']),
+                    'rawHtml' => formatDatatype(htmlspecialchars($Excerpt['element']['text'])),
                 ],
             ]);
         }
-
-        return $Excerpt;
     }
 }

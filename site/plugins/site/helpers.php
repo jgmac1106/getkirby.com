@@ -1,6 +1,5 @@
 <?php
 
-use Kirby\Cms\Page;
 use Kirby\Toolkit\Str;
 use Kirby\Toolkit\Html;
 
@@ -26,7 +25,7 @@ function cheatsheetAdvanced($page)
     return Html::a($page->url(),  'Simple view ›');
 }
 
-function cheatsheetRequired($required) {
+function formatRequired($required) {
     return $required ? '<abbr title="required" class="cheatsheet-required">*</abbr>' : '';
 }
 
@@ -54,7 +53,7 @@ function iconRoot($name)
 
 function formatDatatype(?string $type = null): ?string
 {
-    $datatypes = [
+    $builtinDatatypes = [
         'string',
         'int',
         'float',
@@ -65,13 +64,19 @@ function formatDatatype(?string $type = null): ?string
         'null',
     ];
 
-    if (Str::contains($type, ' ') === true) {
-        // any tyype containing at least one whitespace is
-        // considered not a datatype
+    if(empty($type) === true) {
+        return '';
+    }
+
+    if (preg_match('/^[^\\a-z0-9_]+$/iu', $type) === 1) {
+        // any tyype containing at least one whitespace or any character
+        // that cannot be part of a datatype, just return a plain
+        // code element.
         return "<code>{$type}</code>";
     }
 
     if (Str::contains($type, '|')) {
+        // Multiple datatypes
         $types = explode('|', $type);
 
         if (in_array('', $types)) {
@@ -86,23 +91,30 @@ function formatDatatype(?string $type = null): ?string
         return implode('<span class="type-separator">|</span>', $types);
     }
 
-    if (in_array($type, $datatypes) === true) {
+    if (in_array($type, $builtinDatatypes) === true) {
+        // Atomic PHP datatype
         return Html::tag('code', $type, [
             'class' => "type type-{$type}",
         ]);
     }
 
-    if (Str::contains($type, '\\') === true && preg_match('/^[A-Z]/', $type) === 1) {
-        
+    if (preg_match('/^[A-Z]/', $type) === 1) {
+        // Assume, it’s a class name
+
         if ($lookup = referenceLookup($type)) {
+            // Namespaced class name, look whether it’s a Kirby classs
             return "<code class=\"type type-class\"><a href=\"{$lookup->url()}\">{$type}</a></code>";
-        } else if (class_exists($type) === true) {
+        } else if (class_exists($type) === true && (new ReflectionClass($type))->getName() === $type) {
+            // Some class that exists in PHP in the global namespace. The
+            // seconds check is done to ensure correct case, as `class_exists()``
+            // is not case-sensitive.
             return Html::tag('code', $type, [
                 'class' => "type type-class",
             ]);
         }
     }
 
+    // Probably a code example (not a datatype), just return a plain code tag.
     return "<code>{$type}</code>";
 }
 

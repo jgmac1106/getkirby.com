@@ -28,7 +28,7 @@
     </tr>
 
     <tr>
-      <td>parent<?= cheatsheetRequired(true) ?></td>
+      <td>parent<?= formatRequired(true) ?></td>
       <td><?= formatDatatype('Kirby\Cms\Model') ?></td>
       <td><code>$site</code>, <code>$page</code> or <code>$user</code></td>
     </tr>
@@ -40,7 +40,7 @@
     </tr>
 
     <tr>
-      <td>source<?= cheatsheetRequired(true) ?></td>
+      <td>source<?= formatRequired(true) ?></td>
       <td><?= formatDatatype('string') ?></td>
       <td></td>
     </tr>

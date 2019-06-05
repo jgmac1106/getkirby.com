@@ -539,7 +539,6 @@ hr::after {
 /* -----  Datatypes  -------------------------------------------------------- */
 
 .text .type {
-  background: mix($color-black, $color-white, 7%);
   white-space: nowrap;
 }
 
@@ -551,9 +550,12 @@ hr::after {
   background: mix($color-syntax-green, $color-white, 40%);
 }
 
-.text .type.type-int,
-.text .type.type-float {
+.text .type.type-int {
   background: mix($color-syntax-orange, $color-white, 40%);
+}
+
+.text .type.type-float {
+  background: mix($color-syntax-red, $color-white, 40%);
 }
 
 .text .type.type-bool {
@@ -569,6 +571,6 @@ hr::after {
   background: mix($color-syntax-yellow, $color-white, 40%);
 }
 
-.text .type.type-null {
+.text .type.type-mixed {
   background: mix($color-syntax-blue, $color-white, 40%);
 }
