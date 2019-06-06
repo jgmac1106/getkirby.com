@@ -1,7 +1,7 @@
 /* global Prism */
 import { $, $$ } from "../utils/selector.js";
 import "../components/code.js";
-import { enableBodyScroll, disableBodyScroll } from "body-scroll-lock";
+import { enableBodyScroll, disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 
 const cheatsheet = $(".cheatsheet");
 
@@ -42,6 +42,11 @@ const load = (link) => {
       return response.text();
     }).
     then((html) => {
+      // Scroll locks need to be cleared before replacing parts of the page
+      // using AJAX. Otherwise, the replaced content will become un-scrollable
+      // in Mobile Safari (tested with iOS 12.2)
+      clearScrollLocks();
+
       $(".cheatsheet-article").innerHTML = html;
       $(".cheatsheet-entries a[aria-current]").removeAttribute("aria-current");
 
@@ -64,9 +69,31 @@ const load = (link) => {
 
       // link header buttons
       buttons();
+
+      // re-enable scroll locks
+      setScrollLocks();
     });
 
 };
+
+function setScrollLocks() {
+  // Disable page scrolling, except for the designated scrolling areas. This
+  // also ensures, that iOS does not accidently scroll the whole viewport
+  // and hides parts of the page.
+  disableBodyScroll($(".cheatsheet-main-scrollarea"));
+  disableBodyScroll($(".cheatsheet-sections .cheatsheet-panel-scrollarea"));
+
+  const entriesScrollarea = $(".cheatsheet-entries-scrollarea");
+
+  if (entriesScrollarea !== null) {
+    disableBodyScroll(entriesScrollarea);
+  }
+}
+
+function clearScrollLocks() {
+  clearAllBodyScrollLocks();
+}
+
 
 window.addEventListener("popstate", (e) => {
   if (e.state && e.state.slug) {
@@ -112,14 +139,4 @@ if (currentEntry && currentEntry.scrollIntoView) {
 // container.
 document.body.scrollTo(0, 0);
 
-// Disable page scrolling, except for the designated scrolling areas. This
-// also ensures, that iOS does not accidently scroll the whole viewport
-// and hides parts of the page.
-disableBodyScroll($(".cheatsheet-main-scrollarea"));
-disableBodyScroll($(".cheatsheet-sections .cheatsheet-panel-scrollarea"));
-
-const entriesScrollarea = $(".cheatsheet-entries-scrollarea");
-
-if (entriesScrollarea !== null) {
-  disableBodyScroll(entriesScrollarea);
-}
+setScrollLocks();
