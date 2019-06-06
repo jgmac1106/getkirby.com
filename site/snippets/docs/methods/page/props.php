@@ -58,7 +58,7 @@
     </tr>
 
     <tr>
-      <td>slug<?= cheatsheetRequired(true) ?></td>
+      <td>slug<?= formatRequired(true) ?></td>
       <td><?= formatDatatype('string') ?></td>
       <td></td>
     </tr>
